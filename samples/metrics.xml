@@ -1,0 +1,75 @@
+<?xml version="1.1" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="metricRegistry" class="com.codahale.metrics.MetricRegistry" />
+
+    <bean id="metricsServlet" class="com.codahale.metrics.servlets.MetricsServlet">
+        <constructor-arg ref="metricRegistry" />
+    </bean>
+
+    <bean id="reporter" class="org.apifocal.amix.plugins.metrics.Reporters" factory-method="console" destroy-method="stop">
+        <constructor-arg ref="metricRegistry" />
+    </bean>
+
+    <!-- jetty part -->
+    <bean id="metricsHandler" class="org.eclipse.jetty.servlet.ServletHandler">
+        <property name="servlets">
+            <list>
+                <bean class="org.eclipse.jetty.servlet.ServletHolder">
+                    <constructor-arg value="metrics" />
+                    <constructor-arg ref="metricsServlet" />
+                </bean>
+            </list>
+        </property>
+        <property name="servletMappings">
+            <array value-type="org.eclipse.jetty.servlet.ServletMapping">
+                <bean class="org.eclipse.jetty.servlet.ServletMapping">
+                    <property name="servletName" value="metrics" />
+                    <property name="pathSpecs">
+                        <array value-type="java.lang.String">
+                            <value>/*</value>
+                        </array>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="MetricServer" depends-on="jettyPort" class="org.eclipse.jetty.server.Server"
+          destroy-method="stop">
+
+        <property name="handler">
+            <bean id="handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
+                <property name="handlers">
+                    <list>
+                        <ref bean="metricsHandler" />
+                    </list>
+                </property>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="invokeMetricsConnectors" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="MetricServer" />
+        <property name="targetMethod" value="setConnectors" />
+        <property name="arguments">
+            <list>
+                <bean id="metricConnector" class="org.eclipse.jetty.server.ServerConnector">
+                    <constructor-arg ref="MetricServer" />
+                    <!-- see the jettyPort bean -->
+                    <property name="host" value="#{systemProperties['metrics.host'] != null ? systemProperties['metrics.host'] : '127.0.0.1'}" />
+                    <property name="port" value="#{systemProperties['metrics.port'] != null ? systemProperties['metrics.port'] : '8111'}" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="invokeMetricStart" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+          depends-on="invokeMetricsConnectors">
+        <property name="targetObject" ref="MetricServer" />
+        <property name="targetMethod" value="start" />
+    </bean>
+
+</beans>

@@ -1,4 +1,4 @@
-package org.apifocal.amix.tools.metrics.broker;
+package org.apifocal.amix.plugins.metrics;
 
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.Gauge;

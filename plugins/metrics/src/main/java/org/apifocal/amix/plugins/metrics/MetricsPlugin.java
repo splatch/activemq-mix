@@ -1,4 +1,4 @@
-package org.apifocal.amix.tools.metrics.broker;
+package org.apifocal.amix.plugins.metrics;
 
 import com.codahale.metrics.MetricRegistry;
 import org.apache.activemq.broker.Broker;

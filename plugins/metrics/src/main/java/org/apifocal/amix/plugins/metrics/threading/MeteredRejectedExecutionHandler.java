@@ -1,7 +1,7 @@
-package org.apifocal.amix.tools.metrics.broker.threading;
+package org.apifocal.amix.plugins.metrics.threading;
 
 import com.codahale.metrics.Timer;
-import org.apifocal.amix.tools.metrics.broker.MeterContext;
+import org.apifocal.amix.plugins.metrics.MeterContext;
 
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;

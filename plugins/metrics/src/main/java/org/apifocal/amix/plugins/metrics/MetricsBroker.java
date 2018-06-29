@@ -1,4 +1,4 @@
-package org.apifocal.amix.tools.metrics.broker;
+package org.apifocal.amix.plugins.metrics;
 
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.MetricRegistry;
@@ -7,8 +7,8 @@ import org.apache.activemq.broker.*;
 import org.apache.activemq.broker.region.Destination;
 import org.apache.activemq.broker.region.Subscription;
 import org.apache.activemq.command.*;
-import org.apifocal.amix.tools.metrics.broker.context.SimpleMeterContext;
-import org.apifocal.amix.tools.metrics.broker.threading.MeteredThreadPoolExecutor;
+import org.apifocal.amix.plugins.metrics.context.SimpleMeterContext;
+import org.apifocal.amix.plugins.metrics.threading.MeteredThreadPoolExecutor;
 
 import java.util.ArrayList;
 import java.util.Arrays;

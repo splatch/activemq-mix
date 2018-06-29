@@ -1,12 +1,17 @@
-package org.apifocal.amix.tools.metrics.broker.context;
+package org.apifocal.amix.plugins.metrics.context;
 
 import com.codahale.metrics.*;
-import org.apifocal.amix.tools.metrics.broker.MeterContext;
+import org.apifocal.amix.plugins.metrics.MeterContext;
 
 import java.util.function.Supplier;
 
 import static com.codahale.metrics.MetricRegistry.name;
 
+/**
+ * A default implementation (thus simple) of meter context.
+ *
+ * It delegates creation of metric
+ */
 public class SimpleMeterContext implements MeterContext {
 
     private final MetricRegistry metricRegistry;

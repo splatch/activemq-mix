@@ -23,16 +23,16 @@ limitations under the License.
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apifocal.amix.tools</groupId>
-        <artifactId>metrics</artifactId>
+        <groupId>org.apifocal.amix</groupId>
+        <artifactId>plugins</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>broker</artifactId>
+    <artifactId>metrics</artifactId>
     <packaging>jar</packaging>
 
-    <name>ActiveMQ Mix - Tools - Metrics - Broker</name>
-    <description>Broker plugin.</description>
+    <name>ActiveMQ Mix - Plugins - Metrics</name>
+    <description>Broker plugin which exposes additional diagnostics via dropwizard metrics.</description>
 
     <dependencies>
         <dependency>
@@ -52,6 +52,7 @@ limitations under the License.
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-servlets</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
